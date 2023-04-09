@@ -6,4 +6,4 @@ export default () => {
       <Text>Home</Text>
     </View>
   );
-}
+};
