@@ -4,14 +4,12 @@ import {
   StyleSheet,
   View,
   TouchableHighlight,
-  GestureResponderEvent,
-  Button,
 } from "react-native";
 import React from "react";
 
 type getProps = {
   _name: string;
-  _onClick: (props: any) => string;
+  _onClick: (props?: any) => void;
   _double?: boolean;
   _triple?: boolean;
   _operation?: boolean;
@@ -19,12 +17,12 @@ type getProps = {
 
 export default (props: getProps) => {
   let stylesButton: object = styles.button;
-  if(props._double) stylesButton = styles.buttonDouble;
-  if(props._triple) stylesButton = styles.buttonTriple;
-  if(props._operation) stylesButton = styles.operationButton;
+  if (props._double) stylesButton = styles.buttonDouble;
+  if (props._triple) stylesButton = styles.buttonTriple;
+  if (props._operation) stylesButton = styles.operationButton;
   return (
     <View>
-      <TouchableHighlight onPress={props._onClick}>
+      <TouchableHighlight onPress={() => props._onClick(props._name)}>
         <Text style={stylesButton}>{props._name}</Text>
       </TouchableHighlight>
     </View>
@@ -32,7 +30,7 @@ export default (props: getProps) => {
 };
 
 const styles = StyleSheet.create({
-  button:{
+  button: {
     fontSize: 40,
     padding: 20,
     height: Dimensions.get("window").width / 4,
