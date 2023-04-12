@@ -1,24 +1,34 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import Home from "./src/components/screen";
 import Button from "./src/components/buttons/Buntton";
 import Display from "./src/components/screen";
 
-function name() {
-  return "S";
-}
+const initialState = {
+  displayValue: "0",
+  clearDisplay: false,
+  operation: null,
+  values: [0, 0],
+  current: 0,
+};
 
 export default function App() {
+  let state = { ...initialState };
   const [value, setValue] = useState("0");
   const clearMemory = () => {
     setValue("0");
   };
   const addDigit = (n: string) => {
-    setValue(n);
+    if (n === "." && state.displayValue.includes(".")) {
+      return;
+    }
+    const clearDisplay = state.displayValue === "0" || state.clearDisplay;
+    const currentValue = clearDisplay ? "" : state.displayValue;
+    const displayValue = currentValue + n;
+  
   };
 
-  const setOperation = (n:string) => {
+  const setOperation = (n: string) => {
     setValue(n);
   };
 
@@ -42,7 +52,7 @@ export default function App() {
         <Button _name="+" _onClick={setOperation} _operation={true} />
         <Button _name="0" _onClick={addDigit} _double={true} />
         <Button _name="." _onClick={addDigit} />
-        <Button _name="=" _onClick={setOperation}  _operation={true}/>
+        <Button _name="=" _onClick={setOperation} _operation={true} />
       </View>
       <StatusBar style="auto" />
     </View>
