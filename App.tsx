@@ -4,32 +4,51 @@ import { StyleSheet, View } from "react-native";
 import Button from "./src/components/buttons/Buntton";
 import Display from "./src/components/screen";
 
-const initialState = {
-  displayValue: "0",
-  clearDisplay: false,
-  operation: null,
-  values: [0, 0],
-  current: 0,
-};
+
 
 export default function App() {
-  let state = { ...initialState };
   const [value, setValue] = useState("0");
+
+  const initialState = {
+    displayValue: value,
+    clearDisplay: false,
+    operation: '',
+    values: [0, 0],
+    current: 0,
+  };
+
+  let state = { ...initialState };
+
+
+  const addDigit = (n: string) => {
+    if (n === '.' && state.displayValue.includes('.')) {
+      return
+    }
+    const clearDisplay = state.displayValue === '0' ||
+      state.clearDisplay
+    const currentValue = clearDisplay ? '' : state.displayValue
+    const displayValue = currentValue + n
+
+    setValue(displayValue)
+    if (n !== '.') {
+      const newValue = parseFloat(displayValue)
+      const values = [...state.values]
+      values[state.current] = newValue
+    }
+
+  };
+
   const clearMemory = () => {
     setValue("0");
   };
-  const addDigit = (n: string) => {
-    if (n === "." && state.displayValue.includes(".")) {
-      return;
-    }
-    const clearDisplay = state.displayValue === "0" || state.clearDisplay;
-    const currentValue = clearDisplay ? "" : state.displayValue;
-    const displayValue = currentValue + n;
-  
-  };
 
   const setOperation = (n: string) => {
-    setValue(n);
+    if (state.current === 0) {
+      state.operation = n
+      state.current = 1
+      state.clearDisplay = true
+
+    }
   };
 
   return (
