@@ -4,8 +4,6 @@ import { StyleSheet, View } from "react-native";
 import Button from "./src/components/buttons/Buntton";
 import Display from "./src/components/screen";
 
-
-
 export default function App() {
   const [value, setValue] = useState("0");
 
@@ -28,12 +26,14 @@ export default function App() {
       state.clearDisplay
     const currentValue = clearDisplay ? '' : state.displayValue
     const displayValue = currentValue + n
-
     setValue(displayValue)
     if (n !== '.') {
       const newValue = parseFloat(displayValue)
       const values = [...state.values]
       values[state.current] = newValue
+      console.log(values[0])
+      console.log(values[1])
+
     }
 
   };
